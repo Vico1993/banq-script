@@ -1,6 +1,8 @@
 # BanQ-Script
 
-Small script to check availability of the BanQ STUFF
+Small script to check availability of the BanQ machine.
+
+Link: https://square.banq.qc.ca/reserver
 
 ## Setup
 
