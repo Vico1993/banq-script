@@ -84,22 +84,3 @@ jobs:
       - uses: shogo82148/actions-goveralls@v1
         with:
           parallel-finished: true
-
-  release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Get Manifest version
-        id: manifest-version
-        run: |
-          echo "Reading manifest.json from ./manifest.json"
-          PACKAGE_VERSION=$(cat ./manifest.json | jq '.version' | tr -d '"')
-          echo "current-version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
-
-      - name: Create release
-        run: |
-          gh release create ${{ steps.manifest-version.outputs.current-version }} -p --generate-notes
