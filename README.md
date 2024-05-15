@@ -1,6 +1,6 @@
-# basic-go-repo
+# BanQ-Script
 
-Template for my go template ( tired to copy past )
+Small script to check availability of the BanQ STUFF
 
 ## Setup
 
