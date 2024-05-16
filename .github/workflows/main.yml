@@ -10,6 +10,8 @@ on:
 env:
   GO_VERSION: 1.21
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+  RAILWAY_SERVICE: Banq-service
 
 jobs:
   build:
@@ -84,3 +86,20 @@ jobs:
       - uses: shogo82148/actions-goveralls@v1
         with:
           parallel-finished: true
+
+  railway:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - finish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deploy to railway
+        uses: bervProject/railway-deploy@0.1.2-beta
+        with:
+          service: ${{ env.RAILWAY_SERVICE }}
+          detach: true
