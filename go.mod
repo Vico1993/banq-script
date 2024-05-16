@@ -8,12 +8,14 @@ require (
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
+	golang.org/x/text v0.12.0 // indirect
 )
 
 require (
 	github.com/go-co-op/gocron v1.37.0
 	github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
+	github.com/subosito/gotenv v1.6.0
 	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/term v0.17.0 // indirect
 )

@@ -5,12 +5,16 @@ import (
 	"time"
 
 	"github.com/go-co-op/gocron"
+	"github.com/subosito/gotenv"
 )
 
 var Scheduler = gocron.NewScheduler(time.UTC)
 
 func main() {
-	_, err := Scheduler.Every(1).Hour().Tag("main").Do(func() {
+	// load .env file if any otherwise use env set
+	_ = gotenv.Load()
+
+	_, err := Scheduler.Every(3).Hour().Tag("main").Do(func() {
 		fmt.Println("Start checking appointment")
 
 		task()

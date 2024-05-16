@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
 	"time"
 
 	"github.com/schollz/progressbar/v3"
@@ -39,6 +40,8 @@ var (
 		"4600920": "Rendez-vous de 7 heures (jeudi. vendredi ou samedi)",
 		"4601413": "Rendez-vous de 8 heures (samedi)",
 	}
+
+	available = map[string][]string{}
 )
 
 func task() {
@@ -51,11 +54,32 @@ func task() {
 			checkAvailability(appointmentTypeId, addonId)
 		}
 
+		// Send message
+		if len(available) > 0 {
+			service := NewTelegramService()
+
+			textToSend := "👀 Réservation possible pour *" + appointmentType[appointmentTypeId] + "* "
+			for dateTime, addons := range available {
+				parsed, _ := time.Parse("2006-01-02T15:04:05-0700", dateTime)
+				textToSend += "\n\n 📅 " + parsed.Format("2006-01-02") + " *" + parsed.Format("15:04:05") + "* :\n"
+				for _, addon := range addons {
+					textToSend += "\n - " + addon
+				}
+
+				textToSend += "\n\n"
+			}
+
+			service.TelegramPostMessage(os.Getenv("TELEGRAM_USER_CHAT_ID"), "", textToSend)
+		}
+
+		available = map[string][]string{}
+
 		// Small break
 		makeABreak()
 	}
 }
 
+// CheckAvailability will check for the month, and then check for a specific day
 func checkAvailability(appointmentTypeId string, addonId string) {
 	res := client.Availability.ListMonth(
 		currentTime.Format("2006-01-02"),
@@ -75,8 +99,12 @@ func checkAvailability(appointmentTypeId string, addonId string) {
 			)
 
 			fmt.Println(date + " slots disponible ( " + addons[addonId] + " ):")
-			for _, time := range times {
-				fmt.Println(time.Time)
+			for _, t := range times {
+				if val, ok := available[t.Time]; ok {
+					available[t.Time] = append(val, addons[addonId])
+				} else {
+					available[t.Time] = []string{addons[addonId]}
+				}
 			}
 		}
 	}

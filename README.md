@@ -22,6 +22,9 @@ Link: https://square.banq.qc.ca/reserver
 ```sh
 # Bot token given by the @BotFather
 TELEGRAM_BOT_TOKEN=<TELEGRAM_BOT>
+
+# Chat where messages are pushed deliver
+TELEGRAM_USER_CHAT_ID=<TELEGRAM_BOT>
 ```
 
 2. Install all dependancies
