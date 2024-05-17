@@ -51,7 +51,11 @@ func task() {
 
 		// For all addon
 		for addonId := range addons {
-			checkAvailability(appointmentTypeId, addonId)
+			checkAvailability(currentTime.Format("2006-01-02"), appointmentTypeId, addonId)
+
+			if currentTime.Day() > 14 {
+				checkAvailability(addMonth(currentTime, 1).Format("2006-01-02"), appointmentTypeId, addonId)
+			}
 		}
 
 		// Send message
@@ -80,18 +84,16 @@ func task() {
 }
 
 // CheckAvailability will check for the month, and then check for a specific day
-func checkAvailability(appointmentTypeId string, addonId string) {
+func checkAvailability(date string, appointmentTypeId string, addonId string) {
 	res := client.Availability.ListMonth(
-		currentTime.Format("2006-01-02"),
+		date,
 		appointmentTypeId,
 		addonId,
 	)
 
-	addGotSlots := false
 	for date, isAvailable := range res {
 		// We have apointment available for this day
 		if isAvailable {
-			addGotSlots = true
 			times := client.Availability.ListTime(
 				date,
 				appointmentTypeId,
@@ -107,10 +109,6 @@ func checkAvailability(appointmentTypeId string, addonId string) {
 				}
 			}
 		}
-	}
-
-	if !addGotSlots {
-		fmt.Println(addons[addonId] + " - ")
 	}
 }
 
@@ -129,4 +127,13 @@ func makeABreak() {
 		_ = bar.Add(1)
 		time.Sleep(1 * time.Second)
 	}
+}
+
+// Add month to a date
+func addMonth(t time.Time, m int) time.Time {
+	x := t.AddDate(0, m, 0)
+	if d := x.Day(); d != t.Day() {
+		return x.AddDate(0, 0, -d)
+	}
+	return x
 }
