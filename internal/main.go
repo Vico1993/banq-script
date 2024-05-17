@@ -14,10 +14,12 @@ func main() {
 	// load .env file if any otherwise use env set
 	_ = gotenv.Load()
 
+	fmt.Println(currentTime.String())
+
 	_, err := Scheduler.Cron("1 8-18/3 * * 1-5").Tag("main").Do(func() {
 		fmt.Println("Start checking appointment")
 
-		task()
+		// task()
 
 		fmt.Println("End checking appointment")
 	})
