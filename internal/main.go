@@ -14,7 +14,7 @@ func main() {
 	// load .env file if any otherwise use env set
 	_ = gotenv.Load()
 
-	_, err := Scheduler.Cron("* 8-18/3 * * 1-5").Tag("main").Do(func() {
+	_, err := Scheduler.Cron("1 8-18/3 * * 1-5").Tag("main").Do(func() {
 		fmt.Println("Start checking appointment")
 
 		task()
