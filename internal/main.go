@@ -14,14 +14,17 @@ func main() {
 	// load .env file if any otherwise use env set
 	_ = gotenv.Load()
 
-	fmt.Println(currentTime.String())
+	loc, _ := time.LoadLocation(timezone)
 
-	_, err := Scheduler.Cron("1 8-18/3 * * 1-5").Tag("main").Do(func() {
-		fmt.Println("Start checking appointment")
-
-		// task()
-
-		fmt.Println("End checking appointment")
+	_, err := Scheduler.Every(3).Hours().Tag("main").Do(func() {
+		now := time.Now().In(loc)
+		// Cron("1 8-18/3 * * 1-5")
+		// TODO: Quick fix, but make sure to update the Scheduler
+		if now.Hour() > 8 && now.Hour() < 18 {
+			fmt.Println("Start checking appointment")
+			task()
+			fmt.Println("End checking appointment")
+		}
 	})
 
 	if err != nil {
