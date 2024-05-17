@@ -61,7 +61,7 @@ func task() {
 			textToSend := "👀 Réservation possible pour *" + appointmentType[appointmentTypeId] + "* "
 			for dateTime, addons := range available {
 				parsed, _ := time.Parse("2006-01-02T15:04:05-0700", dateTime)
-				textToSend += "\n\n 📅 " + parsed.Format("2006-01-02") + " *" + parsed.Format("15:04:05") + "* :\n"
+				textToSend += "\n\n 📅 " + parsed.Format("2006-01-02") + " *" + parsed.Format("15:04") + "* :\n"
 				for _, addon := range addons {
 					textToSend += "\n - " + addon
 				}
