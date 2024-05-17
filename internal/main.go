@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"time"
+	_ "time/tzdata"
 
 	"github.com/go-co-op/gocron"
 	"github.com/subosito/gotenv"
