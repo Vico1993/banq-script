@@ -29,7 +29,7 @@ var (
 	appointmentType = map[string]string{
 		"31667152": "Brodeuse numérique",
 		// "31778525": "Decoupe de vinyle",
-		"31666981": "Découpe au laser",
+		// "31666981": "Découpe au laser",
 	}
 
 	addons = map[string]string{
