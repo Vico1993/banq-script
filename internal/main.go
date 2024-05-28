@@ -17,7 +17,7 @@ func main() {
 
 	loc, _ := time.LoadLocation(timezone)
 
-	_, err := Scheduler.Every(3).Hours().Tag("main").Do(func() {
+	_, err := Scheduler.Every(2).Hours().Tag("main").Do(func() {
 		now := time.Now().In(loc)
 		// Cron("1 8-18/3 * * 1-5")
 		// TODO: Quick fix, but make sure to update the Scheduler
