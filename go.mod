@@ -2,7 +2,7 @@ module github.com/Vico1993/banq-script
 
 go 1.21
 
-require github.com/schollz/progressbar/v3 v3.14.3
+require github.com/schollz/progressbar/v3 v3.14.4
 
 require (
 	github.com/google/uuid v1.4.0 // indirect
